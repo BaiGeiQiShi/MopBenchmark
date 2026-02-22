@@ -1,8 +1,8 @@
-# MossBenchmark
-This repository contains 26 programs used by Moss. If you want to know how to use this benchmark, please refer to [Moss](https://github.com/BaiGeiQiShi/Moss).
+# MopBenchmark
+This repository contains 26 programs used by Mop. If you want to know how to use this benchmark, please refer to [Mop](https://github.com/BaiGeiQiShi/Mop).
 
 ## 1. Adjustments to some programs
-**Note:** The Dockerfile provided in [Moss](https://github.com/BaiGeiQiShi/Moss) already includes all the adjustments. Here is just a detailed explanation of each adjustment we made.
+**Note:** The Dockerfile provided in [Mop](https://github.com/BaiGeiQiShi/Mop) already includes all the adjustments. Here is just a detailed explanation of each adjustment we made.
 
 ### 1.1 chown-8.2:
 **Our adjustments:** Since docker containers default to the root user, some of the test cases for chown-8.2 involves operations related to the root user. To address this, we created a new user group and user named mychown, and adjusted the test cases to serve more effectively as oracles.
@@ -25,7 +25,7 @@ Before debloating chown-8.2, you must create a user ```mychown``` that belongs t
 ③Vim use expect script, and it launch many vim-5.8 thread without tty. Take careful to close them. We have used `cleanup` script in vim-5.8 directory to do this. Please modify the path in `cleanup`.
 
 ### 1.3 bash-2.05:
-**Our adjustments:** We were also unable to correctly obtain the bash-2.05 code covered by all test cases using LLVM, but we cannot confirm which code needs to be added back through debugging. On one hand, debugging requires using `clang -g`, while Moss uses `clang -O3` during debloating. Therefore, just because bash-2.05 works normally with `clang -g` doesn't mean it will work correctly with `clang -O3`. On the other hand, since bash-2.05's test cases are interactively verified based on console output, we cannot use instrumentation for manual debugging. Consequently, we only use the 845 test cases that can be correctly handled by the coverage version of bash-2.05 to calculate the generality of bash-2.05.
+**Our adjustments:** We were also unable to correctly obtain the bash-2.05 code covered by all test cases using LLVM, but we cannot confirm which code needs to be added back through debugging. On one hand, debugging requires using `clang -g`, while Mop uses `clang -O3` during debloating. Therefore, just because bash-2.05 works normally with `clang -g` doesn't mean it will work correctly with `clang -O3`. On the other hand, since bash-2.05's test cases are interactively verified based on console output, we cannot use instrumentation for manual debugging. Consequently, we only use the 845 test cases that can be correctly handled by the coverage version of bash-2.05 to calculate the generality of bash-2.05.
 
 **What you need to do before debloating:** 
 
@@ -63,7 +63,7 @@ Use "/postgresql-12.14" (absolute path) as working directory, or you need to cha
 
 ## 2. Key parameters in the debloating scripts:
 - `PROGNAME`: The program name.
-- `version`: The debloating strategy (3 is Moss, 2 is Moss-s1, 1 is Moss-s2, 0 is Moss-s3).
+- `version`: The debloating strategy (3 is Mop, 2 is Mop-s1, 1 is Mop-s2, 0 is Mop-s3).
 - `debop_samplenum`: The sample number of the second and third stages.
 - `domgad_samplenum`: The sample number of the first stage.
 - `alphas`: Alpha value (weight for attack surface reduction).
@@ -72,7 +72,7 @@ Use "/postgresql-12.14" (absolute path) as working directory, or you need to cha
 - `DEBOP_DIR`: The path of CovBlock_Stmt.
 - `DOMGAD_DIR`: The path of CovPath.
 - `COV`: The path of cov.
-- `iternum`: The iteration number of each stage of Moss.
+- `iternum`: The iteration number of each stage of Mop.
 - `realorcov`: Use real or top program as the baseline.
 
 ## 3. To run Chisel and Razor:
